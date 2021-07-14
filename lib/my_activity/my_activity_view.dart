@@ -69,71 +69,78 @@ class _MyActivityPageState extends State<MyActivityPage> {
     return ListView.builder(
         itemCount: logic.myActivitySurveys.length,
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            color: Color(0x77000B52),
-            shadowColor: Colors.grey,
-            elevation: 100000,
-            child: Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.32,
-                    child: buildImage(logic.myActivitySurveys[index].survey),
-                  ),
-                  Flexible(
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.only(left: 20, top: 5),
-                      child: Column(
-                        crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            logic.myActivitySurveys[index].survey.title,
-                            style: kBodyText,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            logic.myActivitySurveys[index].survey.body ?? '',
-                            style: kSubBodyText,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 4,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            logic.myActivitySurveys[index].creationAt.month
-                                .toString() +
-                                '.' +
-                                logic.myActivitySurveys[index].creationAt.day
-                                    .toString() +
-                                '.' +
-                                logic.myActivitySurveys[index].creationAt.year
-                                    .toString() +
-                                ' ' +
-                                logic.myActivitySurveys[index].creationAt.hour
-                                    .toString() +
-                                ':' +
-                                logic.myActivitySurveys[index].creationAt
-                                    .minute
-                                    .toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: kSubBodyText,
-                          )
-                        ],
-                      ),
+          return GestureDetector(
+            onTap: (){
+              logic.selectedSurveyIndex.value = index;
+              logic.surveyId = logic.myActivitySurveys.value[index].id.toString();
+              Get.toNamed('/MyActivityImagePage',parameters: {'token':logic.token,'surveyId':logic.surveyId});
+            },
+            child: Card(
+              color: Color(0x77000B52),
+              shadowColor: Colors.grey,
+              elevation: 100000,
+              child: Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.32,
+                      child: buildImage(logic.myActivitySurveys[index].survey),
                     ),
-                  )
-                ],
+                    Flexible(
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.only(left: 20, top: 5),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              logic.myActivitySurveys[index].survey.title,
+                              style: kBodyText,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              logic.myActivitySurveys[index].survey.body ?? '',
+                              style: kSubBodyText,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 4,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              logic.myActivitySurveys[index].creationAt.month
+                                  .toString() +
+                                  '.' +
+                                  logic.myActivitySurveys[index].creationAt.day
+                                      .toString() +
+                                  '.' +
+                                  logic.myActivitySurveys[index].creationAt.year
+                                      .toString() +
+                                  ' ' +
+                                  logic.myActivitySurveys[index].creationAt.hour
+                                      .toString() +
+                                  ':' +
+                                  logic.myActivitySurveys[index].creationAt
+                                      .minute
+                                      .toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: kSubBodyText,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:turkuazmobil/resources/background_image.dart';
 import 'package:turkuazmobil/resources/palette.dart';
 import 'menu_logic.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -13,113 +12,113 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   final logic = Get.find<MenuLogic>();
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-      return Stack(
-        children: [
-          BackgroundImage(),
-          Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            IconButton(
-                              icon: SvgPicture.asset('assets/icons/doctor.svg',
-                                  width: 100),
-                              onPressed: () {
-                                Get.toNamed('/ProfilePage',parameters: {'token':logic.token});
-                              },
-                              iconSize: size.width * 0.3 < size.height * 0.3
-                                  ? size.width * 0.3
-                                  : size.height * 0.3,
-                            ),
-                            Text(
-                              'Profil',
-                              style: kBodyText,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: IconButton(
-                                icon: SvgPicture.asset('assets/icons/checklist.svg',
-                                    width: 100),
-                                onPressed: () {
-                                  {
-                                    Get.toNamed('/SurveysPage',parameters: {'token':logic.token});
-                                  }
-                                },
-                                iconSize: size.width * 0.3 < size.height * 0.3
-                                    ? size.width * 0.3
-                                    : size.height * 0.3,
-                              ),
-                            ),
-                            Text(
-                              'Anketler',
-                              style: kBodyText,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.only(bottom: 10),
-                  ),
-                  Row(
+    return Stack(
+      children: [
+        BackgroundImage(),
+        Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
                         children: [
-                          IconButton(
-                            icon: SvgPicture.asset(
-                              'assets/icons/data-transfer.svg',
-                              width: 100,
+                          Container(
+                            width: size.width * 0.4,
+                            height: size.height * 0.2,
+                            child: IconButton(
+                              icon:
+                                  Image.asset('assets/icons/doctor.png'),
+                              onPressed: () {
+                                Get.toNamed('/ProfilePage',
+                                    parameters: {'token': logic.token});
+                              },
                             ),
-                            onPressed: () {
-                              Get.toNamed('/MyActivityPage',parameters: {'token':logic.token});
-                            },
-                            iconSize: size.width * 0.3 < size.height * 0.3
-                                ? size.width * 0.3
-                                : size.height * 0.3,
                           ),
                           Text(
-                            'Katıldıklarım',
+                            'Profil',
                             style: kBodyText,
                           ),
                         ],
                       ),
                       Column(
                         children: [
-                          IconButton(
-                            icon:
-                            SvgPicture.asset('assets/icons/tick.svg', width: 100),
-                            onPressed: () {
-                              Get.toNamed('/Verify',parameters: {'token':logic.token});
-                            },
-                            iconSize: size.width * 0.3 < size.height * 0.3
-                                ? size.width * 0.3
-                                : size.height * 0.3,
+                          Container(
+                            width: size.width * 0.4,
+                            height: size.height * 0.2,
+                            child: IconButton(
+                              icon: Image.asset('assets/icons/online-test.png'),
+                              onPressed: () {
+                                {
+                                  Get.toNamed('/SurveysPage',
+                                      parameters: {'token': logic.token});
+                                }
+                              },
+                            ),
                           ),
                           Text(
-                            'Onaylama',
+                            'Anketler',
                             style: kBodyText,
                           ),
                         ],
                       ),
                     ],
                   ),
-                ],
-              )),
-        ],
-      );
-    }
+                  padding: const EdgeInsets.only(bottom: 10),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          width: size.width * 0.4,
+                          height: size.height * 0.2,
+                          child: IconButton(
+                            icon: Image.asset('assets/icons/history.png'),
+                            onPressed: () {
+                              Get.toNamed('/MyActivityPage',
+                                  parameters: {'token': logic.token});
+                            },
+                          ),
+                        ),
+                        Text(
+                          'Katıldıklarım',
+                          style: kBodyText,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          width: size.width * 0.4,
+                          height: size.height * 0.2,
+                          child: IconButton(
+                            icon: Image.asset('assets/icons/check.png'),
+                            onPressed: () {
+                              Get.toNamed('/Verify',
+                                  parameters: {'token': logic.token});
+                            },
+                          ),
+                        ),
+                        Text(
+                          'Onaylama',
+                          style: kBodyText,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )),
+      ],
+    );
+  }
 
   @override
   void dispose() {

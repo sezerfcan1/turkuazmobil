@@ -8,7 +8,7 @@ const TextStyle kHeading = TextStyle(
 
 const TextStyle kBodyText = TextStyle(
   fontSize: 18,
-  color: Colors.white,
+  color: Colors.black,
 );
 
 const TextStyle kSubBodyText = TextStyle(
@@ -18,5 +18,11 @@ const TextStyle kSubBodyText = TextStyle(
 
 const TextStyle kSubHeadText = TextStyle(
   fontSize: 24,
-  color: Colors.white,
+  color: Colors.black,
 );
+
+const color1 = Color(0xFFD9C4C8);
+const color2 = Color(0x99A3B6B5);
+const color3 = Color(0xFF16F227);
+const color4 = Color(0xFF67a030);
+const color5 = Color(0xFF003700);

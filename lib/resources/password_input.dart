@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'constant.dart';
 import 'palette.dart';
 
 class PasswordInput extends StatelessWidget {
@@ -21,7 +22,7 @@ class PasswordInput extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[600].withOpacity(0.5),
+          color: color2,
           borderRadius: BorderRadius.circular(16),
         ),
         child: TextField(
@@ -33,7 +34,7 @@ class PasswordInput extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Icon(
                 icon,
-                color: Colors.white,
+                color: Colors.black,
                 size: 30,
               ),
             ),

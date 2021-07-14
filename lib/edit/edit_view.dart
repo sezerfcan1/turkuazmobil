@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:turkuazmobil/edit/colored_point.dart';
 import 'package:turkuazmobil/images/images_logic.dart';
-
 import 'custom_painter.dart';
 import 'edit_logic.dart';
 
@@ -16,7 +15,6 @@ class _EditPageState extends State<EditPage> {
   final logic = Get.find<EditLogic>();
   final imagesLogic = Get.find<ImagesLogic>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,49 +26,92 @@ class _EditPageState extends State<EditPage> {
           child: Container(
             child: buildGestureDetector(),
             decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imagesLogic.survey.value
-                      .images[imagesLogic.selectedImageIndex.value].fileName
-                      .replaceAll(r"\", '/')),
-                  fit: BoxFit.fill,
-                ),
+              image: DecorationImage(
+                image: NetworkImage(imagesLogic.survey.value
+                    .images[imagesLogic.selectedImageIndex.value].fileName
+                    .replaceAll(r"\", '/')),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         );
       }),
       bottomNavigationBar: Obx(() {
-  return buildBottomNavigationBar();
-}),
+        return buildBottomNavigationBar();
+      }),
     );
   }
 
-  buildGestureDetector(){
-    if(!logic.zoomable.value){
+  buildGestureDetector() {
+    if (!logic.zoomable.value) {
       return CustomPaint(
         child: GestureDetector(
           onPanDown: (details) {
             setState(() {
-              imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp.addSquare(logic.selectedChoiceId.value,Squares()
-                ..da = DrawingArea(
-                    point: details.localPosition,
-                    areaPaint: Paint()
-                      ..strokeCap = StrokeCap.round
-                      ..isAntiAlias = true
-                      ..color = logic.color.value
-                      ..strokeWidth = 2)
-                ..height =0
-                ..width = 0,
+              imagesLogic
+                  .survey.value.images[imagesLogic.selectedImageIndex.value].cp
+                  .addSquare(
+                logic.selectedChoiceId.value,
+                Squares()
+                  ..da = DrawingArea(
+                      point: details.localPosition,
+                      areaPaint: Paint()
+                        ..strokeCap = StrokeCap.round
+                        ..isAntiAlias = true
+                        ..color = logic.color.value
+                        ..strokeWidth = 2)
+                  ..height = 0
+                  ..width = 0,
               );
             });
           },
           onPanUpdate: (details) {
             setState(() {
-              imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp.squares[logic.selectedChoiceId.value].last.width = details.localPosition.dx - imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp.squares[logic.selectedChoiceId.value].last.da.point.dx;
-              imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp.squares[logic.selectedChoiceId.value].last.height = details.localPosition.dy -  imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp.squares[logic.selectedChoiceId.value].last.da.point.dy;
+              imagesLogic
+                      .survey
+                      .value
+                      .images[imagesLogic.selectedImageIndex.value]
+                      .cp
+                      .squares[logic.selectedChoiceId.value]
+                      .last
+                      .width =
+                  details.localPosition.dx -
+                      imagesLogic
+                          .survey
+                          .value
+                          .images[imagesLogic.selectedImageIndex.value]
+                          .cp
+                          .squares[logic.selectedChoiceId.value]
+                          .last
+                          .da
+                          .point
+                          .dx;
+              imagesLogic
+                      .survey
+                      .value
+                      .images[imagesLogic.selectedImageIndex.value]
+                      .cp
+                      .squares[logic.selectedChoiceId.value]
+                      .last
+                      .height =
+                  details.localPosition.dy -
+                      imagesLogic
+                          .survey
+                          .value
+                          .images[imagesLogic.selectedImageIndex.value]
+                          .cp
+                          .squares[logic.selectedChoiceId.value]
+                          .last
+                          .da
+                          .point
+                          .dy;
             });
           },
         ),
-        painter: MyCustomPainter(imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value].cp,logic.color.value),
+        painter: MyCustomPainter(
+            imagesLogic
+                .survey.value.images[imagesLogic.selectedImageIndex.value].cp,
+            logic.color.value),
       );
     }
   }
@@ -79,16 +120,17 @@ class _EditPageState extends State<EditPage> {
     return BottomNavigationBar(
       currentIndex: logic.bottomNavigationBarSelectedItem.value,
       onTap: (index) {
-
-        if(index == 0){
-          if(imagesLogic.selectedImageIndex.value>0){
+        if (index == 0) {
+          if (imagesLogic.selectedImageIndex.value > 0) {
             imagesLogic.selectedImageIndex.value--;
             logic.bottomNavigationBarSelectedItem.value = index;
-          }else{
-            Get.snackbar('İlk Görüntüdesiniz', 'Daha fazla geri gidemezsiniz',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 750));
+          } else {
+            Get.snackbar('İlk Görüntüdesiniz', 'Daha fazla geri gidemezsiniz',
+                snackPosition: SnackPosition.TOP,
+                duration: Duration(milliseconds: 750));
           }
         }
-        if(index == 1){
+        if (index == 1) {
           logic.zoomable.value = false;
           showDialog(
             context: context,
@@ -107,82 +149,83 @@ class _EditPageState extends State<EditPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: ListTile(
                           leading: Container(
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .height * 0.1,
+                            width: MediaQuery.of(context).size.height * 0.1,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 3.0),
+                              border:
+                                  Border.all(color: Colors.grey, width: 3.0),
                               shape: BoxShape.circle,
-                              color: imagesLogic.survey.value.choiceGroup.choices[i]
+                              color: imagesLogic
+                                  .survey.value.choiceGroup.choices[i]
                                   .getColor(),
                             ),
                           ),
                           title: Text(
-                            imagesLogic.survey.value.choiceGroup.choices[i].name,
+                            imagesLogic
+                                .survey.value.choiceGroup.choices[i].name,
                             style: TextStyle(fontSize: 17),
                           ),
                           onTap: () {
                             setState(() {
                               logic.bottomNavigationBarSelectedItem.value = 3;
-                              logic.color.value = imagesLogic.survey.value.choiceGroup.choices[i].getColor();
-                              logic.selectedChoiceId.value = imagesLogic.survey.value.choiceGroup.choices[i].id;
+                              logic.color.value = imagesLogic
+                                  .survey.value.choiceGroup.choices[i]
+                                  .getColor();
+                              logic.selectedChoiceId.value = imagesLogic
+                                  .survey.value.choiceGroup.choices[i].id;
                               Get.back();
                             });
                           }),
                     ),
                   );
                 },
-                itemCount: imagesLogic.survey.value.choiceGroup.choices.length - 1,
+                itemCount:
+                    imagesLogic.survey.value.choiceGroup.choices.length - 1,
               );
             },
           );
 
-          Get.snackbar('Çizim modu açık!', 'Yakınlaştırma modu kapalı!',duration: Duration(milliseconds: 700),snackPosition: SnackPosition.BOTTOM);
-
+          Get.snackbar('Çizim modu açık!', 'Yakınlaştırma modu kapalı!',
+              duration: Duration(milliseconds: 700),
+              snackPosition: SnackPosition.BOTTOM);
         }
-        if(index ==2){
+        if (index == 2) {
           logic.zoomable.value = true;
           logic.bottomNavigationBarSelectedItem.value = index;
-          Get.snackbar('Yakınlaştırma modu açık', '',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 700));
+          Get.snackbar('Yakınlaştırma modu açık', '',
+              snackPosition: SnackPosition.TOP,
+              duration: Duration(milliseconds: 700));
         }
-        if(index == 3){
+        if (index == 3) {
           logic.bottomNavigationBarSelectedItem.value = index;
-         /// GERİ AL
+          imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value]
+              .cp.squares[logic.selectedChoiceId]
+              .removeLast();
         }
-        if(index == 4){
+        if (index == 4) {
           logic.bottomNavigationBarSelectedItem.value = index;
-
           logic.sendAnswers(imagesLogic);
-
-
         }
-        if(index == 5){
+        if (index == 5) {
           logic.bottomNavigationBarSelectedItem.value = index;
-          ///SİL
+          imagesLogic.survey.value.images[imagesLogic.selectedImageIndex.value]
+              .cp.squares
+              .clear();
         }
-        if(index == 6){
-          if(imagesLogic.selectedImageIndex.value<imagesLogic.survey.value.images.length - 1){
+        if (index == 6) {
+          if (imagesLogic.selectedImageIndex.value <
+              imagesLogic.survey.value.images.length - 1) {
             imagesLogic.selectedImageIndex.value++;
             logic.bottomNavigationBarSelectedItem.value = index;
-          }else{
-            Get.snackbar('Sonuncu Görüntüdesiniz', 'Daha fazla ileri gidemezsiniz',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 750));
+          } else {
+            Get.snackbar(
+                'Sonuncu Görüntüdesiniz', 'Daha fazla ileri gidemezsiniz',
+                snackPosition: SnackPosition.TOP,
+                duration: Duration(milliseconds: 750));
           }
         }
-
-
-
-
-
-
-        print(imagesLogic.surveyId.toString());
-        print(imagesLogic.getSurveyImageId().toString());
-
       },
       iconSize: 10,
-      //currentIndex: logic.selectedItem.value,
       type: BottomNavigationBarType.fixed,
-      //onTap: (index) => onClick(index), //Get.toNamed('/ProfilePage'),
       items: [
         BottomNavigationBarItem(
             icon: Image.asset(
@@ -235,8 +278,4 @@ class _EditPageState extends State<EditPage> {
     Get.delete<EditLogic>();
     super.dispose();
   }
-
-
-
 }
-

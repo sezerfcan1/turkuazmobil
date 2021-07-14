@@ -26,7 +26,8 @@ class LoginLogic extends GetxController {
         await getLoginInfo();
 
         if(_authenticated.value && _connection.value && !_loading.value) {
-          Get.offAllNamed('/MenuPage', parameters: {'token': '$getToken'});
+          var token = getToken();
+          Get.offAllNamed('/MenuPage', parameters: {'token': '$token'});
           Constant.showLoginVerify();
         }
         else if (!_authenticated.value && _connection.value && !_loading.value && !_tooManyReq.value){

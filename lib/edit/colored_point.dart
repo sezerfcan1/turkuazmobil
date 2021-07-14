@@ -6,7 +6,7 @@ import 'package:turkuazmobil/models/survey/answer.dart';
 class DrawingArea {
   Offset point;
   Paint areaPaint;
-  DrawingArea({this.point, this.areaPaint});
+  DrawingArea({@required this.point,@required this.areaPaint});
 }
 
 class Squares{
@@ -27,7 +27,7 @@ class ColoredPoint {
     squares[choiceID].add(square);
   }
 
-  getBoxes() {
+  List<Box> getBoxes() {
     List<Box> boxes = <Box>[];
 
     if (squares != null) {

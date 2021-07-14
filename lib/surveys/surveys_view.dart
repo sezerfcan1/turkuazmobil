@@ -34,7 +34,8 @@ class _SurveysPageState extends State<SurveysPage> {
                       logic.search.value.pagination.page--;
                       logic.getData();
                     }else{
-                      Get.snackbar('Birinci sayfadasınız', '',backgroundColor: Color(0x68001A72),snackPosition: SnackPosition.BOTTOM);
+                      Get.snackbar('İlk sayfadasınız', 'Daha fazla geri gidemezsiniz',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 750));
+
                     }
                   }),
               IconButton(
@@ -45,7 +46,7 @@ class _SurveysPageState extends State<SurveysPage> {
                       logic.search.value.pagination.page++;
                       logic.getData();
                     }else{
-                      Get.snackbar('Son sayfadasınız', '',backgroundColor: Color(0x68001A72),snackPosition: SnackPosition.BOTTOM);
+                      Get.snackbar('Son sayfadasınız', 'Daha fazla ileri gidemezsiniz',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 750));
                     }
                   }),
               IconButton(
@@ -209,20 +210,31 @@ class _SurveysPageState extends State<SurveysPage> {
   }
 
   Image buildImage(survey) {
-    if (survey == null) {
+    try{
+      if (survey == null) {
+        return Image.asset('assets/images/not-found.png');
+      }
+
+      if (survey.smallImages == null || survey.smallImages.length == 0) {
+        return Image.asset('assets/images/not-found.png');
+      }
+
+      var filePath = survey?.smallImages[0].fileName;
+
+      if (filePath == null || '' == filePath) {
+        return Image.asset('assets/images/not-found.png');
+      }
+
+      return Image.network(
+          filePath.replaceAll(r"\", '/'),
+          fit: BoxFit.fill,
+          errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+
+            return Image.asset('assets/images/not-found.png');}
+      );
+    }catch (_){
       return Image.asset('assets/images/not-found.png');
     }
-
-    if (survey.smallImages == null || survey.smallImages.length == 0) {
-      return Image.asset('assets/images/not-found.png');
-    }
-
-    var filePath = survey?.smallImages[0].fileName;
-
-    if (filePath == null || '' == filePath) {
-      return Image.asset('assets/images/not-found.png');
-    }
-    return Image.network(filePath.replaceAll(r"\", '/'));
   }
 
 }

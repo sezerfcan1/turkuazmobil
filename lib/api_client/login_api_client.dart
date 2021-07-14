@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:turkuazmobil/models/login/login_info.dart';
 import 'package:turkuazmobil/models/login/login.dart';
 import 'package:turkuazmobil/resources/exception.dart';
-
 import '../resources/constant.dart';
 
 class LoginApiClient {

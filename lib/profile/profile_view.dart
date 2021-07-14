@@ -20,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         BackgroundImage(),
         Obx(() {
-          if(logic.loading){
+          if(logic.loading.value){
             return Center(child: CircularProgressIndicator(),);
           }else{
             return ProfileBuilder(size: size, logic: logic);
@@ -65,8 +65,7 @@ class ProfileBuilder extends StatelessWidget {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(logic.myInfo.value.image.fileName
-                          .replaceAll(r"\", '/')),
+                      image: buildNetworkImage(),
                     ),
                     border: Border.all(color: Colors.white, width: 2.0)),
               ),
@@ -78,7 +77,7 @@ class ProfileBuilder extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       logic.myInfo.value.fullName == null
-                          ? 'Girilmedi'
+                          ? ''
                           : logic.myInfo.value.fullName,
                       style: kSubHeadText,
                     ),
@@ -91,12 +90,13 @@ class ProfileBuilder extends StatelessWidget {
               SizedBox(
                 height: 12.0,
               ),
-              Container(
-                  child: Text(
-                      logic.myInfo.value.department == null
-                          ? 'Girilmedi'
-                          : logic.myInfo.value.department,
-                      style: kBodyText)),
+              Text(
+                logic.myInfo.value.hospital == null
+                    ? 'Girilmedi'
+                    : logic.myInfo.value.hospital,
+                style: kBodyText,
+              ),
+
               SizedBox(
                 height: size.height * 0.030,
               ),
@@ -109,36 +109,17 @@ class ProfileBuilder extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.apartment,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         SizedBox(
                           width: 5.0,
                         ),
                         Text(
-                          logic.myInfo.value.hospital == null
-                              ? 'Girilmedi'
-                              : logic.myInfo.value.hospital,
-                          style: kBodyText,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.01),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.work,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          logic.myInfo.value.title == null
-                              ? 'Girilmedi'
-                              : logic.myInfo.value.title,
-                          style: kBodyText,
-                        ),
+                            logic.myInfo.value.department == null
+                                ? ''
+                                : logic.myInfo.value.department,
+                            style: kBodyText),
+
                       ],
                     ),
                     SizedBox(height: size.height * 0.01),
@@ -147,7 +128,7 @@ class ProfileBuilder extends StatelessWidget {
                       children: [
                         Icon(
                           FontAwesomeIcons.venusMars,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -155,7 +136,7 @@ class ProfileBuilder extends StatelessWidget {
                         Text(
                           logic.myInfo.value.gender == null
                               ? 'Girilmedi'
-                              : logic.myInfo.value.gender == '1'
+                              : logic.myInfo.value.gender == 0
                                   ? 'Erkek'
                                   : 'Kadın',
                           style: kBodyText,
@@ -168,7 +149,7 @@ class ProfileBuilder extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.phone,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -187,7 +168,7 @@ class ProfileBuilder extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.email,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -200,14 +181,30 @@ class ProfileBuilder extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: size.height * 0.01),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          logic.myInfo.value.about == null
+                        ? 'Girilmedi'
+                            : logic.myInfo.value.about,
+                          style: kBodyText,
+                        ),
+                      ],
+                    ),
                     SizedBox(height: size.height * 0.03),
                     ElevatedButton(
                       child: Text('Bilgilerimi Güncelle'),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
+                            Get.toNamed('/ProfileEditPage', parameters: {'token': logic.token});
                       },
                     ),
                   ],
@@ -218,5 +215,13 @@ class ProfileBuilder extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  ImageProvider buildNetworkImage() {
+    if(logic.myInfo.value.image == null){ return AssetImage('assets/images/profile.jpg');}
+    else{ return NetworkImage(logic.myInfo.value.image.fileName
+        .replaceAll(r"\", '/'));}
+
+
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:turkuazmobil/api_client/login_api_client.dart';
 import 'package:turkuazmobil/resources/background_image.dart';
-import 'package:turkuazmobil/resources/palette.dart';
+import 'package:turkuazmobil/resources/button.dart';
 import 'package:turkuazmobil/resources/password_input.dart';
 import 'package:turkuazmobil/resources/text_input.dart';
 
@@ -63,29 +62,22 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: SafeArea(
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 30,horizontal: 10),
+      child: Center(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                height: 150,
                 child: Center(
-                  child: Text(
-                    'Turkuaz',
-                    style: kHeading,
-                  ),
+                  child: Image.asset('assets/images/logo.png',scale: 0.001,),
                 ),
               ),
-              SizedBox(
-                height: 100,
-              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   children: [
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         TextInput(
                           icon: FontAwesomeIcons.users,
@@ -102,34 +94,15 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: 50,
-                        ),
-                        ElevatedButton(
-                          child: Text('    Giriş Yap    '),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0x6B2FE2D3)),
-                            animationDuration: Duration(seconds: 3),
-                          ),
-                          onPressed: () {
-                            if (_mail.text == '' || _password.text == '' || _mail.text == null || _password.text == null) {
-                              Get.snackbar('Uyarı', 'Lütfen mail ve şifrenizi giriniz!',
-                                  backgroundColor: Color(0xEB992C11));
-                            }else {
-                              logic.setLogin(
-                                  mail: _mail.text, password: _password.text);
-                              logic.getLoginInfo();
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 80,
-                        ),
+                        LoginButtonWidget(mail: _mail, password: _password, logic: logic),
+                        SizedBox(width: 10,),
+                        SignUpButtonWidget(mail: _mail, password: _password, logic: logic),
                       ],
-                    )
+                    ),
+                    SizedBox(height: 10,),
                   ],
                 ),
               )
@@ -140,3 +113,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+

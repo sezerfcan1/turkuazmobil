@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:turkuazmobil/models/login/doctor_my_info.dart';
+import 'package:turkuazmobil/resources/exception.dart';
 import '../resources/constant.dart';
 
 class DoctorMyInfoApiClient {
@@ -23,7 +24,7 @@ class DoctorMyInfoApiClient {
         model = DoctorMyInfo.fromJson(responseJson);
         return model;
       }else{
-        throw Exception('Fail');
+        throw BadRequest();
       }
 
 

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:turkuazmobil/api_client/my_activity_api_client.dart';
 import 'package:turkuazmobil/models/survey/my_activity_search.dart';
 import 'package:turkuazmobil/models/survey/my_activity_surveys.dart';
+import 'package:turkuazmobil/resources/constant.dart';
+import 'package:turkuazmobil/resources/exception.dart';
 
 class MyActivityLogic extends GetxController {
   MyActivityLogic({@required this.myActivityApiClient}) {
@@ -38,13 +40,18 @@ class MyActivityLogic extends GetxController {
         _loading(false);
       }
     } on SocketException {
+      _loading(false);
       Get.back();
-      Get.snackbar('Bağlantı Hatası', 'Sunucu ile bağlantı kurulamadı',
-          backgroundColor: Colors.red, colorText: Colors.white);
-    } catch (_) {
+      Constant.showConnectError();
+    } on Unauthorized{
+      _loading(false);
       Get.back();
-      Get.snackbar('Üzgünüz', 'Bir hata oluştu',
-          backgroundColor: Colors.red, colorText: Colors.white);
+      Constant.showUnauthorized();
+    }
+    catch (_) {
+      _loading(false);
+      Get.back();
+      Constant.unexpectedError();
     }
   }
 }

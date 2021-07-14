@@ -4,6 +4,7 @@ import 'package:turkuazmobil/resources/constant.dart';
 import 'package:turkuazmobil/models/search/search.dart';
 import 'dart:convert';
 import 'package:turkuazmobil/models/search/surveys.dart';
+import 'package:turkuazmobil/resources/exception.dart';
 
 
 class SearchApiClient {
@@ -29,7 +30,7 @@ class SearchApiClient {
 
       return surveysMini;
     } else {
-      throw Exception('Fail');
+      throw BadRequest();
     }
   }
 

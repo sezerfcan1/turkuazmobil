@@ -4,10 +4,14 @@ import 'package:turkuazmobil/edit/edit_binding.dart';
 import 'package:turkuazmobil/edit/edit_view.dart';
 import 'package:turkuazmobil/my_activity/my_activity_binding.dart';
 import 'package:turkuazmobil/my_activity/my_activity_view.dart';
+import 'package:turkuazmobil/my_activity_image/my_activity_image_binding.dart';
+import 'package:turkuazmobil/profile_edit/profile_edit_view.dart';
 import 'package:turkuazmobil/verify/verify_binding.dart';
 import 'package:turkuazmobil/verify/verify_view.dart';
 import 'menu/menu_binding.dart';
 import 'menu/menu_view.dart';
+import 'my_activity_image/my_activity_image_view.dart';
+import 'profile_edit/profile_edit_binding.dart';
 import 'surveys/surveys_binding.dart';
 import 'surveys/surveys_view.dart';
 import 'images/images_binding.dart';
@@ -42,7 +46,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/ImagesPage', page: ()=>ImagesPage(),binding: ImagesBinding()),
         GetPage(name: '/EditPage',page: ()=>EditPage(),binding: EditBinding()),
         GetPage(name: '/MyActivityPage', page: ()=>MyActivityPage(),binding: MyActivityBinding()),
+        GetPage(name: '/MyActivityImagePage', page: ()=>MyActivityImagePage(),binding: MyActivityImageBinding()),
         GetPage(name: '/Verify', page: ()=> VerifyPage(),binding: VerifyBinding()),
+        GetPage(name: '/ProfileEditPage', page: ()=> ProfileEditPage(), binding: ProfileEditBinding()),
 
       ],
       theme: ThemeData(

@@ -22,9 +22,7 @@ class ImagesLogic extends GetxController {
   var survey = Survey().obs;
   var answer = Answer().obs;
   var loading = true.obs;
-  getSurveyImageId(){
-    return survey.value.images[selectedImageIndex.value].id;
-  }
+
 
   Future<void> getSurveyData()async {
     try {
