@@ -20,7 +20,7 @@ class _MyActivityPageState extends State<MyActivityPage> {
           BackgroundImage(),
           Scaffold(
             appBar: AppBar(
-              title: Text('Anketler'),
+              title: Text('Aktivitelerim'),
               actions: [
                 IconButton(
                     icon: Icon(

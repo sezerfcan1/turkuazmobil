@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'colored_point.dart';
+import 'edit_logic.dart';
 
 class MyCustomPainter extends CustomPainter {
 
@@ -9,6 +11,7 @@ class MyCustomPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    Get.find<EditLogic>().size = size;
     Paint background = Paint()..color = Colors.transparent;
     Rect rect = Rect.fromLTWH(0, 0, size.width, size.height);
     canvas.drawRect(rect, background);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:turkuazmobil/resources/background_image.dart';
+import 'package:turkuazmobil/resources/palette.dart';
 import 'verify_logic.dart';
 
 class VerifyPage extends StatefulWidget {
@@ -24,29 +25,24 @@ class _VerifyPageState extends State<VerifyPage> {
                     icon: Icon(
                       Icons.navigate_before,
                     ),
-                    onPressed: () {/*
-                      if (logic.search.value.pagination.page != 0) {
-                        logic.search.value.pagination.page--;
+                    onPressed: () {
+                      if (logic.search.value.page != 0) {
+                        logic.search.value.page--;
                         logic.getData();
                       }else{
                         Get.snackbar('Birinci sayfadasınız', '',backgroundColor: Color(0x68001A72),snackPosition: SnackPosition.BOTTOM);
-                      }*/
+                      }
                     }),
                 IconButton(
                     icon: Icon(Icons.navigate_next),
                     onPressed: () {
-                    /*  if (!(logic.surveysMini.length <
-                     //     logic.search.value.pagination.rows)) {
-                     //   logic.search.value.pagination.page++;
+                      if (!(logic.myActivitySurveys.value.length <
+                          logic.search.value.page)) {
+                        logic.search.value.page++;
                         logic.getData();
                       }else{
                         Get.snackbar('Son sayfadasınız', '',backgroundColor: Color(0x68001A72),snackPosition: SnackPosition.BOTTOM);
-                      }*/
-                    }),
-                IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-
+                      }
                     }),
               ],
             ),
@@ -55,7 +51,7 @@ class _VerifyPageState extends State<VerifyPage> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 child: Obx(() {
-                  if(logic.loading){
+                  if(logic.loading.value){
                     return Center(child: CircularProgressIndicator());
                   }else{
                     return buildListView();
@@ -75,13 +71,13 @@ class _VerifyPageState extends State<VerifyPage> {
   }
   ListView buildListView() {
     return ListView.builder(
-     //   itemCount: logic.surveysMini.length,
+        itemCount: logic.myActivitySurveys.value.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
               logic.selectedSurveyIndex.value = index;
-          //    logic.surveyId = logic.surveysMini[logic.selectedSurveyIndex.value].id.toString();
-              Get.toNamed('/ImagesPage',parameters: {'token':logic.token,'surveyId':logic.surveyId});
+              logic.surveyId = logic.myActivitySurveys.value[logic.selectedSurveyIndex.value].id.toString();
+              Get.toNamed('/VerifyImagePage',parameters: {'token':logic.token,'surveyId':logic.surveyId});
             },
             child: Card(
               color: Color(0x77000B52),
@@ -96,7 +92,7 @@ class _VerifyPageState extends State<VerifyPage> {
                           .of(context)
                           .size
                           .width * 0.32,
-                //      child: buildImage(logic.surveysMini[index]),
+                      child: buildImage(logic.myActivitySurveys.value[index].survey),
                     ),
                     Flexible(
                       child: Padding(
@@ -107,41 +103,41 @@ class _VerifyPageState extends State<VerifyPage> {
                           CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(''/*
-                              logic.surveysMini[index].title,
+                            Text(
+                              logic.myActivitySurveys.value[index].survey.title,
                               style: kBodyText,
-                              overflow: TextOverflow.ellipsis,*/
+                              overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Text(''/*
-                              logic.surveysMini[index].choiceGroup.name,
+                            Text(
+                              logic.myActivitySurveys.value[index].survey.body,
                               style: kSubBodyText,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 4,*/
+                              maxLines: 4,
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            Text(/*
-                              logic.surveysMini[index].creationAt.month
+                            Text(
+                              logic.myActivitySurveys.value[index].survey.creationAt.month
                                   .toString() +
                                   '.' +
-                                  logic.surveysMini[index].creationAt.day
+                                  logic.myActivitySurveys.value[index].survey.creationAt.day
                                       .toString() +
                                   '.' +
-                                  logic.surveysMini[index].creationAt.year
+                                  logic.myActivitySurveys.value[index].survey.creationAt.year
                                       .toString() +
                                   ' ' +
-                                  logic.surveysMini[index].creationAt.hour
+                                  logic.myActivitySurveys.value[index].survey.creationAt.hour
                                       .toString() +
                                   ':' +
-                                  logic.surveysMini[index].creationAt
+                                  logic.myActivitySurveys.value[index].survey.creationAt
                                       .minute
                                       .toString(),
                               overflow: TextOverflow.ellipsis,
-                              style: kSubBodyText,*/''
+                              style: kSubBodyText,
                             )
                           ],
                         ),

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:turkuazmobil/api_client/answer_send_api_client.dart';
@@ -16,8 +17,8 @@ class EditLogic extends GetxController {
   var choices = <Choice>[].obs;
   var zoomable = false.obs;
   var color = Color(0x00000000).obs;
-
-
+  GlobalKey stickyKey = GlobalKey();
+  Size size = Size(0, 0);
 
   String token = Get.parameters['token'];
 

@@ -14,7 +14,6 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final logic = Get.find<EditLogic>();
   final imagesLogic = Get.find<ImagesLogic>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +23,7 @@ class _EditPageState extends State<EditPage> {
           maxScale: 20,
           minScale: 0.5,
           child: Container(
+            key: logic.stickyKey,
             child: buildGestureDetector(),
             decoration: BoxDecoration(
               image: DecorationImage(

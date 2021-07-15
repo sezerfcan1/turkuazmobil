@@ -101,7 +101,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: IconButton(
                             icon: Image.asset('assets/icons/check.png'),
                             onPressed: () {
-                              Get.toNamed('/Verify',
+                              Get.toNamed('/VerifyPage',
                                   parameters: {'token': logic.token});
                             },
                           ),

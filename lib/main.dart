@@ -8,6 +8,8 @@ import 'package:turkuazmobil/my_activity_image/my_activity_image_binding.dart';
 import 'package:turkuazmobil/profile_edit/profile_edit_view.dart';
 import 'package:turkuazmobil/verify/verify_binding.dart';
 import 'package:turkuazmobil/verify/verify_view.dart';
+import 'package:turkuazmobil/verify_image/verify_image_binding.dart';
+import 'package:turkuazmobil/verify_image/verify_image_view.dart';
 import 'menu/menu_binding.dart';
 import 'menu/menu_view.dart';
 import 'my_activity_image/my_activity_image_view.dart';
@@ -47,8 +49,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/EditPage',page: ()=>EditPage(),binding: EditBinding()),
         GetPage(name: '/MyActivityPage', page: ()=>MyActivityPage(),binding: MyActivityBinding()),
         GetPage(name: '/MyActivityImagePage', page: ()=>MyActivityImagePage(),binding: MyActivityImageBinding()),
-        GetPage(name: '/Verify', page: ()=> VerifyPage(),binding: VerifyBinding()),
+        GetPage(name: '/VerifyPage', page: ()=> VerifyPage(),binding: VerifyBinding()),
         GetPage(name: '/ProfileEditPage', page: ()=> ProfileEditPage(), binding: ProfileEditBinding()),
+        GetPage(name: '/VerifyImagePage', page: ()=> VerifyImagePage(), binding: VerifyImageBinding()),
 
       ],
       theme: ThemeData(
