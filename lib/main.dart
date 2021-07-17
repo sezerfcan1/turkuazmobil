@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turkuazmobil/admin_menu/admin_menu_binding.dart';
 import 'package:turkuazmobil/edit/edit_binding.dart';
 import 'package:turkuazmobil/edit/edit_view.dart';
 import 'package:turkuazmobil/my_activity/my_activity_binding.dart';
@@ -10,6 +11,8 @@ import 'package:turkuazmobil/verify/verify_binding.dart';
 import 'package:turkuazmobil/verify/verify_view.dart';
 import 'package:turkuazmobil/verify_image/verify_image_binding.dart';
 import 'package:turkuazmobil/verify_image/verify_image_view.dart';
+import 'package:turkuazmobil/video_call/video_call_binding.dart';
+import 'admin_menu/admin_menu_view.dart';
 import 'menu/menu_binding.dart';
 import 'menu/menu_view.dart';
 import 'my_activity_image/my_activity_image_view.dart';
@@ -22,6 +25,7 @@ import 'login/login_binding.dart';
 import 'login/login_view.dart';
 import 'profile/profile_binding.dart';
 import 'profile/profile_view.dart';
+import 'video_call/video_call_view.dart';
 
 
 
@@ -52,6 +56,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/VerifyPage', page: ()=> VerifyPage(),binding: VerifyBinding()),
         GetPage(name: '/ProfileEditPage', page: ()=> ProfileEditPage(), binding: ProfileEditBinding()),
         GetPage(name: '/VerifyImagePage', page: ()=> VerifyImagePage(), binding: VerifyImageBinding()),
+        GetPage(name: '/AdminMenu', page: ()=> AdminMenuPage(),binding: AdminMenuBinding()),
+        GetPage(name: '/VideoCallPage', page: ()=> VideoCallPage(),binding: VideoCallBinding()),
 
       ],
       theme: ThemeData(

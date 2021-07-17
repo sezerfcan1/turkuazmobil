@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turkuazmobil/api_client/admin_login_api_client.dart';
 import 'package:turkuazmobil/resources/constant.dart';
 import 'package:turkuazmobil/api_client/login_api_client.dart';
 import 'package:turkuazmobil/models/login/login.dart';
@@ -9,7 +10,8 @@ import 'package:turkuazmobil/models/login/login_info.dart';
 import 'package:turkuazmobil/resources/exception.dart';
 
 class LoginLogic extends GetxController {
-  LoginLogic({@required this.loginApiClient});
+  LoginLogic({@required this.loginApiClient,@required this.adminLoginApiClient});
+  AdminLoginApiClient adminLoginApiClient;
   LoginApiClient loginApiClient;
   var _login = Login().obs;
   var _authenticated = false.obs;
@@ -17,17 +19,31 @@ class LoginLogic extends GetxController {
   var _connection = false.obs;
   var _loginInfo = LoginInfo().obs;
   var _tooManyReq = false.obs;
+  var admin = false.obs;
+
 
   setLogin({@required String mail, @required String password}) async {
 
       _login.value.email = mail;
       _login.value.password = password;
 
-        await getLoginInfo();
+      if(admin.value){
+        await getAdminLoginInfo();
 
-        if(_authenticated.value && _connection.value && !_loading.value) {
+      }else{
+
+        await getLoginInfo();
+      }
+
+
+
+        if(_authenticated.value && _connection.value && !_loading.value && !admin.value) {
           var token = getToken();
           Get.offAllNamed('/MenuPage', parameters: {'token': '$token'});
+          Constant.showLoginVerify();
+        }else if(_authenticated.value && _connection.value && !_loading.value && admin.value) {
+          var token = getToken();
+          Get.offAllNamed('/AdminMenu', parameters: {'token': '$token'});
           Constant.showLoginVerify();
         }
         else if (!_authenticated.value && _connection.value && !_loading.value && !_tooManyReq.value){
@@ -39,6 +55,7 @@ class LoginLogic extends GetxController {
           Constant.showTooManyRequest();
         }
   }
+
 
   getLoading() {
     return _loading.value;
@@ -53,6 +70,41 @@ class LoginLogic extends GetxController {
     try{
       _loading(true);
       _loginInfo.value = await loginApiClient.fetchLoginInfo(_login.value);
+      if(_loginInfo.value.token != null){
+        _loading(false);
+        _connection(true);
+        _authenticated(true);
+        admin(false);
+      }
+
+    } on SocketException {
+      _loading(false);
+      _authenticated(false);
+      _connection(false);
+    } on BadRequest {
+      _loading(false);
+      _authenticated(false);
+      _connection(true);
+    } on TooManyRequest{
+      _loading(false);
+      _authenticated(false);
+      _connection(true);
+      _tooManyReq(true);
+    }catch(Exception) {
+      _loading(false);
+      _authenticated(false);
+      _connection(true);
+    } finally {
+      _loading(false);
+    }
+  }
+
+
+  Future<void> getAdminLoginInfo() async {
+
+    try{
+      _loading(true);
+      _loginInfo.value = await adminLoginApiClient.fetchLoginInfo(_login.value);
       if(_loginInfo.value.token != null){
         _loading(false);
         _connection(true);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Constant {
-  static const baseUrl = 'http://192.168.1.37:1000';
+  static const baseUrl = 'http://192.168.19.225:1000';
 
 
   static showConnectError(){Get.snackbar('Bağlantı Hatası',

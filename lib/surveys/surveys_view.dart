@@ -1,11 +1,14 @@
+import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:turkuazmobil/models/search/search.dart' as search;
 import 'package:turkuazmobil/resources/background_image.dart';
 import 'package:turkuazmobil/resources/palette.dart';
-
+import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'surveys_logic.dart';
+const appId = '932d20bdf6cb4a23a07decbc1dbf3631';
+const token = '006932d20bdf6cb4a23a07decbc1dbf3631IAA8xu2a/wI1pT0ZvWV5fsaxJ3BKFr+J3GrToH9XvcwfmcZ+SWEAAAAAEAAApPzoOL/yYAEAAQA4v/Jg';
 
 class SurveysPage extends StatefulWidget {
   @override
@@ -37,6 +40,13 @@ class _SurveysPageState extends State<SurveysPage> {
                       Get.snackbar('İlk sayfadasınız', 'Daha fazla geri gidemezsiniz',snackPosition: SnackPosition.TOP,duration: Duration(milliseconds: 750));
 
                     }
+                  }),
+              IconButton(
+                  icon: Icon(
+                    Icons.video_call,
+                  ),
+                  onPressed: () {
+                    Get.to(RemoteView());
                   }),
               IconButton(
                   icon: Icon(Icons.navigate_next),
@@ -237,4 +247,91 @@ class _SurveysPageState extends State<SurveysPage> {
     }
   }
 
+}
+
+class RemoteView extends StatefulWidget {
+  @override
+  _RemoteViewState createState() => _RemoteViewState();
+}
+
+class _RemoteViewState extends State<RemoteView> {
+  int _remoteUid;
+  RtcEngine _engine;
+
+  @override
+  void initState() {
+    super.initState();
+    initForAgora();
+  }
+
+  @override
+  void dispose(){
+    _engine.leaveChannel();
+    _engine.destroy();
+    super.dispose();
+  }
+
+
+  Future<void> initForAgora() async {
+
+
+    _engine = await RtcEngine.createWithConfig(RtcEngineConfig(appId));
+
+    await _engine.enableVideo();
+
+    _engine.setEventHandler(
+      RtcEngineEventHandler(
+        joinChannelSuccess: (String channel, int uid, int elapsed) {
+        },
+        userJoined: (int uid, int elapsed) {
+          setState(() {
+            _remoteUid = uid;
+          });
+        },
+        userOffline: (int uid, UserOfflineReason reason) {
+          setState(() {
+            _remoteUid = null;
+          });
+        },
+      ),
+    );
+
+    await _engine.joinChannel(token, "secondChannel", null, 0);
+
+
+  }
+
+
+
+  // Create UI with local view and remote view
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backwardsCompatibility: false,
+        title: const Text('Görüntülü Görüşme'),
+      ),
+      body: Stack(
+        children: [
+          Center(
+            child: _renderRemoteVideo(),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+
+  // remote user video
+  Widget _renderRemoteVideo() {
+    if (_remoteUid != null) {
+      return RtcRemoteView.SurfaceView(uid: _remoteUid);
+    } else {
+      return Text(
+        'Bağlanılıyor..',
+        textAlign: TextAlign.center,
+      );
+    }
+  }
 }

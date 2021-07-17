@@ -23,9 +23,8 @@ class LoginButtonWidget extends StatelessWidget {
           Get.snackbar('Uyarı', 'Lütfen mail ve şifrenizi giriniz!',
               backgroundColor: Color(0xEB992C11));
         }else {
-          logic.setLogin(
-              mail: _mail.text, password: _password.text);
-          logic.getLoginInfo();
+          logic.admin.value = false;
+          logic.setLogin(mail: _mail.text, password: _password.text);
         }
       },
       child: Container(
@@ -87,9 +86,8 @@ class SignUpButtonWidget extends StatelessWidget {
           Get.snackbar('Uyarı', 'Lütfen mail ve şifrenizi giriniz!',
               backgroundColor: Color(0xEB992C11));
         }else {
-          logic.setLogin(
-              mail: _mail.text, password: _password.text);
-          logic.getLoginInfo();
+          logic.admin.value = true;
+          logic.setLogin(mail: _mail.text, password: _password.text);
         }
       },
       child: Container(
@@ -110,7 +108,7 @@ class SignUpButtonWidget extends StatelessWidget {
             Container(
               width: 100.0,
               height: double.infinity,
-              child: Center(child: Text('Kayıt Ol',style: Theme.of(context).textTheme.button.apply(color: Colors.black),)),
+              child: Center(child: Text('Yönetici Girişi',style: Theme.of(context).textTheme.button.apply(color: Colors.black),)),
               decoration: BoxDecoration(
                   color: color2,
                   borderRadius: BorderRadius.only(
